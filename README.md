@@ -1,4 +1,6 @@
 # ansible-user-manage
+
+```
 .
 ├── README.md
 ├── ansible.cfg
@@ -20,6 +22,9 @@
 │       │       └── main.yml
 │       └── tmp
 │           └── tmp_authorized_keys
+├── tools
+│   └── hashed_pw_gen.py
 └── users.yml
 
-12 directories, 9 files
+13 directories, 10 files
+```
