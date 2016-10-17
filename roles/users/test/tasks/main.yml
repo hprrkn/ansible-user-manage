@@ -1,0 +1,14 @@
+---
+- name: include vars
+  include_vars: roles/users/base_local/vars/user_list.yml
+
+- name: ssh test
+  command: /bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /home/'{{item.name}}'/.ssh/id_rsa '{{item.name}}'@test-web1
+  with_items:
+    - '{{users}}'
+  #when: item.changed == True
+  #
+- name: rm tmp_ssh_pub
+  file: path={{item}} state=absent
+  with_fileglob:
+    - "roles/tmp/tmp_authorized_keys/*"

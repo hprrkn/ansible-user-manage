@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  become: True
+  roles:
+   - { role: users/base_local }
+
+- hosts: remote
+  become: True
+  roles:
+   - { role: users/remote }
+
+- hosts: localhost
+  become: True
+  roles:
+   - { role: users/test }
