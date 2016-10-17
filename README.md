@@ -1,4 +1,6 @@
 # ansible-user-manage
+
+```
 .
 ├── README.md
 ├── ansible.cfg
@@ -23,3 +25,4 @@
 └── users.yml
 
 12 directories, 9 files
+```
