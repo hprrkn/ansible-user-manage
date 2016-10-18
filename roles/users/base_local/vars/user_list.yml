@@ -2,7 +2,18 @@
 # sample users
 
 users:
-  - {name: 'tom', uid: 1058, gid: 1058, group: 'wheel'}
-  - {name: 'bob', uid: 1059, gid: 1059, group: 'wheel'}
-  - {name: 'nathan', uid: 1060, gid: 1060, group: 'wheel'}
-  - {name: 'evan', uid: 1061, gid: 1061, group: 'wheel'}
+  - name: tom 
+    id: 1058
+    group: wheel
+
+  - name: bob
+    id: 1059
+    group: wheel
+
+  - name: nathan
+    id: 1060
+    group: wheel
+
+  - name: evan
+    id: 1061
+    group: wheel

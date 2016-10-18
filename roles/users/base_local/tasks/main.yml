@@ -3,22 +3,22 @@
   include_vars: roles/users/base_local/vars/user_list.yml
 
 - name: add a new group
-  group: name='{{item.name}}' gid='{{item.gid}}'
+  group: name='{{item.name}}' gid='{{item.id}}'
   with_items:
     - '{{users}}'
 
 - name: add a new user
-  user: name='{{item.name}}' state=present generate_ssh_key=yes groups=wheel group='{{item.name}}' uid='{{item.uid}}'
+  user: name='{{item.name}}' state=present generate_ssh_key=yes groups='{{item.group}}' group='{{item.name}}' uid='{{item.id}}'
   register: adduser_result
   with_items:
     - '{{users}}'
 
 - name: make authorized_keys
-  template: src=roles/users/base_local/templates/id_rsa.pub.j2 dest={{item.home}}/.ssh/authorized_keys mode=600 owner={{item.name}} group={{item.name}} force=yes
+  template: src=roles/users/base_local/templates/id_rsa.pub.j2 dest='{{item.home}}'/.ssh/authorized_keys mode=600 owner='{{item.name}}' group='{{item.name}}' force=yes
   with_items: '{{adduser_result.results}}'
   when: item.changed == True
 
 - name: make tmp_authorized_keys
-  template: src=roles/users/base_local/templates/id_rsa.pub.j2 dest=/home/ansible/roles/users/tmp/tmp_authorized_keys/{{item.name}}.pub mode=700 owner=ansible group=ansible force=yes
+  template: src=roles/users/base_local/templates/id_rsa.pub.j2 dest=/home/ansible/roles/users/tmp/tmp_authorized_keys/'{{item.name}}'.pub mode=700 owner=ansible group=ansible force=yes
   with_items: '{{adduser_result.results}}'
   when: item.changed == True

@@ -3,12 +3,12 @@
   include_vars: roles/users/base_local/vars/user_list.yml
 
 - name: add a new group
-  group: name='{{item.name}}' gid='{{item.gid}}'
+  group: name='{{item.name}}' gid='{{item.id}}'
   with_items:
     - '{{users}}'
 
 - name: add a new user
-  user: name='{{item.name}}' state=present generate_ssh_key=no groups=wheel group='{{item.name}}' uid='{{item.uid}}'
+  user: name='{{item.name}}' state=present generate_ssh_key=no groups='{{item.group}}' group='{{item.name}}' uid='{{item.id}}'
   register: adduser_result
   with_items:
     - '{{users}}'
@@ -22,7 +22,7 @@
   when: item.changed == True
 
 - name: cp authorized_key
-  copy: src=roles/users/tmp/tmp_authorized_keys/{{item.name}}.pub dest={{item.home}}/.ssh/authorized_keys mode=600 group='{{item.name}}' owner='{{item.name}}'
+  copy: src=roles/users/tmp/tmp_authorized_keys/'{{item.name}}'.pub dest='{{item.home}}'/.ssh/authorized_keys mode=600 group='{{item.name}}' owner='{{item.name}}'
   with_items: '{{adduser_result.results}}'
   when: item.changed == True
 
