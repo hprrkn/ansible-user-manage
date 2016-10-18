@@ -6,12 +6,29 @@
   group: name='{{item.name}}' gid='{{item.id}}'
   with_items:
     - '{{users}}'
+  when:
+    - item.state != "absent"
 
 - name: add a new user
   user: name='{{item.name}}' state=present generate_ssh_key=yes groups='{{item.group}}' group='{{item.name}}' uid='{{item.id}}'
   register: adduser_result
   with_items:
     - '{{users}}'
+  when:
+    - item.state != "absent"
+
+- name: delete user
+  user: name='{{item.name}}' state=absent 
+  with_items:
+    - '{{users}}'
+  register: delete_user_result
+  when:
+    - item.state == "absent"
+
+- name: delete user_home_dir
+  file: path='{{item.home}}'
+  with_items: '{{delete_user_result.results}}'
+  when: item.changed == True
 
 - name: make authorized_keys
   template: src=roles/users/base_local/templates/id_rsa.pub.j2 dest='{{item.home}}'/.ssh/authorized_keys mode=600 owner='{{item.name}}' group='{{item.name}}' force=yes

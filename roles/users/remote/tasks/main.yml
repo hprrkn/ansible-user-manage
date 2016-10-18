@@ -13,8 +13,18 @@
   with_items:
     - '{{users}}'
 
-- name: mk tmp
-  file: path=/tmp/temppp mode=700  state=directory
+- name: delete user
+  user: name='{{item.name}}' state=absent
+  with_items:
+    - '{{users}}'
+  register: delete_user_result
+  when:
+    - item.state == "absent"
+
+- name: delete user_home_dir
+  file: path='{{item.home}}'
+  with_items: '{{delete_user_result.results}}'
+  when: item.changed == True
 
 - name: mk .ssh
   file: path={{item.home}}/.ssh mode=700 group='{{item.name}}' owner='{{item.name}}' state=directory
@@ -25,11 +35,3 @@
   copy: src=roles/users/tmp/tmp_authorized_keys/'{{item.name}}'.pub dest='{{item.home}}'/.ssh/authorized_keys mode=600 group='{{item.name}}' owner='{{item.name}}'
   with_items: '{{adduser_result.results}}'
   when: item.changed == True
-
-#- name: cp authorized_keys
-#  authorized_key:
-#    user='{{item.name}}'
-#    manage_dir=yes
-#    key:  "{{ lookup('file', /tmp/ssh_pubs/' +  item.name  + '.pub' }}"
-#  with_items: '{{adduser_result.results}}'
-#  when: item.changed == True
