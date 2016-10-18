@@ -5,15 +5,19 @@ users:
   - name: tom 
     id: 1058
     group: wheel
+    state: present
 
   - name: bob
     id: 1059
     group: wheel
+    state: present
 
   - name: nathan
     id: 1060
     group: wheel
+    state: present
 
   - name: evan
     id: 1061
     group: wheel
+    state: absent

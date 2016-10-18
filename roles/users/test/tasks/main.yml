@@ -6,6 +6,8 @@
   command: /bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /home/'{{item.name}}'/.ssh/id_rsa '{{item.name}}'@test-web1
   with_items:
     - '{{users}}'
+  when:
+    - item.state != "absent"
 
 - name: rm tmp_ssh_pub
   file: path='{{item}}' state=absent
