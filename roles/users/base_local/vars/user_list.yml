@@ -17,3 +17,7 @@ users:
   - name: evan
     id: 1061
     group: wheel
+
+  - name: yohan
+    id: 1062
+    group: wheel
