@@ -9,4 +9,4 @@ users:
   - {name: 'anri', id: 1063, group: 'wheel', passwd: '$1$SomeSalt$u2lLOjCsZBdUkTLRMHrp6.'}
   - {name: 'tanaka', id: 1064, group: 'wheel', passwd: '$1$SomeSalt$u4DYrNNMecZENRaRE6YLL.'}
   #- {name: 'redbul', id: 1065, group: 'wheel', passwd: '$1$SomeSalt$Lx73HmHZpPkjQeP9iJWoY0'}
-  - {name: 'paper', id: 1066, group: 'wheel', passwd: '$1$SomeSalt$YZRdVZ3lPMoYBAm8oTd6F0'}
+  - {name: 'paper', id: 1066, group: 'wheel', passwd: '$1$SomeSalt$ZRdVZ3lPMoYBAm8oTd6F0'}

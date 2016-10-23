@@ -13,6 +13,9 @@
   with_items:
     - '{{users}}'
 
+- name: debug
+  debug: var=adduser_result.results
+
 - name: make authorized_keys
   copy: content='{{item.ssh_public_key}}' dest={{item.home}}/.ssh/authorized_keys mode=600 owner='{{item.name}}' group='{{item.name}}' force=yes
   with_items: '{{adduser_result.results}}'

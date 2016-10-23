@@ -10,4 +10,4 @@
 - name: rm tmp_ssh_pub
   file: path='{{item}}' state=absent
   with_fileglob:
-    - "roles/tmp/tmp_authorized_keys/*"
+    - "/home/ansible/ansible-user-manage/roles/users/tmp/tmp_authorized_keys/*"
