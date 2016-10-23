@@ -18,15 +18,8 @@
   with_items: '{{adduser_result.results}}'
   when: item.changed == True
 
-- name: check existance authorized_keys
-  stat: path=/home/{{item.name}}/.ssh/authorized_keys
-  register: authorized_keys
-  with_items: 
-    - '{{users}}'
-
 - name: cp authorized_key
-  copy: src=roles/users/tmp/tmp_authorized_keys/'{{item.name}}'.pub dest='{{item.home}}'/.ssh/authorized_keys mode=600 group='{{item.name}}' owner='{{item.name}}'
+  copy: src=roles/users/tmp/tmp_authorized_keys/{{item.name}}.pub dest={{item.home}}/.ssh/authorized_keys mode=600 group='{{item.name}}' owner='{{item.name}}'
   with_items: '{{adduser_result.results}}'
   when: 
     - item.changed == True
-    - not authorized_keys.stat.exists

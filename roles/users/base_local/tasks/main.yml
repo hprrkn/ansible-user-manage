@@ -19,6 +19,6 @@
   when: item.changed == True
 
 - name: make tmp_authorized_keys
-  copy: content='{{item.ssh_public_key}}' dest=/home/ansible/roles/users/tmp/tmp_authorized_keys/{{item.name}}.pub mode=700 owner=ansible group=ansible force=yes
+  copy: content='{{item.ssh_public_key}}' dest=/home/ansible/ansible-user-manage/roles/users/tmp/tmp_authorized_keys/{{item.name}}.pub mode=700 owner=ansible group=ansible force=yes
   with_items: '{{adduser_result.results}}'
   when: item.changed == True
