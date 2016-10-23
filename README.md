@@ -1,11 +1,22 @@
-# ansible-user-manage
+# ansible-user-manage and more something
+
+ansible-playbook 2.1.1.0
 
 ```
 .
 ├── ansible.cfg
 ├── hosts
+├── ip_list.yml
 ├── README.md
 ├── roles
+│   ├── httpd_conf
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   ├── templates
+│   │   │   ├── local.conf.j2
+│   │   │   └── remote.conf.j2
+│   │   └── vars
+│   │       └── ip_list.yml
 │   └── users
 │       ├── base_local
 │       │   ├── tasks
@@ -25,5 +36,5 @@
 ├── useradd.sh
 └── users.yml
 
-12 directories, 10 files
+16 directories, 15 files
 ```
