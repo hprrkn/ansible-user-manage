@@ -2,16 +2,14 @@
 
 ```
 .
-├── README.md
 ├── ansible.cfg
 ├── hosts
+├── README.md
 ├── roles
 │   └── users
 │       ├── base_local
 │       │   ├── tasks
 │       │   │   └── main.yml
-│       │   ├── templates
-│       │   │   └── id_rsa.pub.j2
 │       │   └── vars
 │       │       └── user_list.yml
 │       ├── remote
@@ -24,7 +22,8 @@
 │           └── tmp_authorized_keys
 ├── tools
 │   └── hashed_pw_gen.py
+├── useradd.sh
 └── users.yml
 
-13 directories, 10 files
+12 directories, 10 files
 ```
