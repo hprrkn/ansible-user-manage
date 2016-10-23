@@ -2,22 +2,7 @@
 # sample users
 
 users:
-  - name: tom 
-    id: 1058
-    group: wheel
-
-  - name: bob
-    id: 1059
-    group: wheel
-
-  - name: nathan
-    id: 1060
-    group: wheel
-
-  - name: evan
-    id: 1061
-    group: wheel
-
-  - name: yohan
-    id: 1062
-    group: wheel
+  - {name: 'tom', id: 1058, group: 'wheel'}
+  - {name: 'bob', id: 1059, group: 'wheel'}
+  - {name: 'nathan', id: 1060, group: 'wheel'}
+  - {name: 'evan', id: 1061, group: 'wheel'}
