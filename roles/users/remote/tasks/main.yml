@@ -8,28 +8,25 @@
     - '{{users}}'
 
 - name: add a new user
-  user: name='{{item.name}}' state=present generate_ssh_key=no groups='{{item.group}}' group='{{item.name}}' uid='{{item.id}}'
+  user: name='{{item.name}}' state=present generate_ssh_key=no groups='{{item.group}}' group='{{item.name}}' uid='{{item.id}}' password='{{item.passwd}}'
   register: adduser_result
   with_items:
     - '{{users}}'
-
-- name: mk tmp
-  file: path=/tmp/temppp mode=700  state=directory
 
 - name: mk .ssh
   file: path={{item.home}}/.ssh mode=700 group='{{item.name}}' owner='{{item.name}}' state=directory
   with_items: '{{adduser_result.results}}'
   when: item.changed == True
 
+- name: check existance authorized_keys
+  stat: path=/home/{{item.name}}/.ssh/authorized_keys
+  register: authorized_keys
+  with_items: 
+    - '{{users}}'
+
 - name: cp authorized_key
   copy: src=roles/users/tmp/tmp_authorized_keys/'{{item.name}}'.pub dest='{{item.home}}'/.ssh/authorized_keys mode=600 group='{{item.name}}' owner='{{item.name}}'
   with_items: '{{adduser_result.results}}'
-  when: item.changed == True
-
-#- name: cp authorized_keys
-#  authorized_key:
-#    user='{{item.name}}'
-#    manage_dir=yes
-#    key:  "{{ lookup('file', /tmp/ssh_pubs/' +  item.name  + '.pub' }}"
-#  with_items: '{{adduser_result.results}}'
-#  when: item.changed == True
+  when: 
+    - item.changed == True
+    - not authorized_keys.stat.exists

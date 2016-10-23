@@ -8,17 +8,17 @@
     - '{{users}}'
 
 - name: add a new user
-  user: name='{{item.name}}' state=present generate_ssh_key=yes groups='{{item.group}}' group='{{item.name}}' uid='{{item.id}}'
+  user: name='{{item.name}}' state=present generate_ssh_key=yes groups='{{item.group}}' group='{{item.name}}' uid='{{item.id}}' password={{item.passwd}}
   register: adduser_result
   with_items:
     - '{{users}}'
 
 - name: make authorized_keys
-  copy: content='{{item.ssh_public_key}}' dest='{{item.home}}'/.ssh/authorized_keys mode=600 owner='{{item.name}}' group='{{item.name}}' force=yes
+  copy: content='{{item.ssh_public_key}}' dest={{item.home}}/.ssh/authorized_keys mode=600 owner='{{item.name}}' group='{{item.name}}' force=yes
   with_items: '{{adduser_result.results}}'
   when: item.changed == True
 
 - name: make tmp_authorized_keys
-  copy: content='{{item.ssh_public_key}}' dest=/home/ansible/roles/users/tmp/tmp_authorized_keys/'{{item.name}}'.pub mode=700 owner=ansible group=ansible force=yes
+  copy: content='{{item.ssh_public_key}}' dest=/home/ansible/roles/users/tmp/tmp_authorized_keys/{{item.name}}.pub mode=700 owner=ansible group=ansible force=yes
   with_items: '{{adduser_result.results}}'
   when: item.changed == True

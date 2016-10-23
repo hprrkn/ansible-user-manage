@@ -2,7 +2,7 @@
 # sample users
 
 users:
-  - {name: 'tom', id: 1058, group: 'wheel'}
-  - {name: 'bob', id: 1059, group: 'wheel'}
-  - {name: 'nathan', id: 1060, group: 'wheel'}
-  - {name: 'evan', id: 1061, group: 'wheel'}
+  - {name: 'tom', id: 1058, group: 'wheel', passwd: '$1$SomeSalt$XcBw01NWq0jh.LI9J9VwY.'}
+  - {name: 'bob', id: 1059, group: 'wheel', passwd: '$1$SomeSalt$TAEX0cdQLx.cxM7.Yyq200'}
+  - {name: 'nathan', id: 1060, group: 'wheel', passwd: '$1$SomeSalt$TAEX0cdQLx.cxM7.Yyq200'}
+  - {name: 'evan', id: 1061, group: 'wheel', passwd: '$1$SomeSalt$TAEX0cdQLx.cxM7.Yyq200'}
