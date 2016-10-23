@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+  DocumentRoot "/usr/local/apache2/htdocs"
+
+  ErrorLog logs/error_log
+  LogFormat "%h %l %u %t \"%m /%V%U%q\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+  CustomLog logs/access_log combined
+
+
+  <Location "/">
+      Require ip 210.172.128.230
+{% for item in ip_list %}
+      Require ip {{ item.ip | ipv4 }}
+{% endfor %}
+  </Location>
+</VirtualHost>

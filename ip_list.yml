@@ -1,0 +1,6 @@
+---
+- hosts: all
+#- hosts: localhost
+  become: True
+  roles:
+   - { role: httpd_conf }

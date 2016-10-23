@@ -1,0 +1,36 @@
+---
+
+- name: load ip_list
+  include_vars: roles/httpd_conf/vars/ip_list.yml
+
+- name: make local httpd.conf
+  template: src=roles/httpd_conf/templates/local.conf.j2 dest=/usr/local/apache2/conf/extra.conf owner=apache group=apache mode=644
+  register: edit_result
+  with_items:
+    - '{{ip_list}}'
+  when: 
+    - is_localhost is defined and is_localhost == True
+
+- name: make remote httpd.conf
+  template: src=roles/httpd_conf/templates/remote.conf.j2 dest=/usr/local/apache2/conf/extra/vhosts.conf owner=apache group=apache mode=644
+  register: edit_result
+  with_items:
+    - '{{ip_list}}'
+  when: 
+    - is_remote is defined and is_remote == True
+
+- name: checkconfig
+  command: /usr/local/apache2/bin/apachectl configtest
+  register: configtest_result 
+  when: 
+    - edit_result.changed == true
+
+- debug: var=configtest_result
+
+- name: restart
+  command: /usr/local/apache2/bin/apachectl -k graceful
+  when: 
+    - configtest_result is defined and configtest_result.stderr == 'Syntax OK'
+
+- name: check port
+  wait_for: port=80 delay=3

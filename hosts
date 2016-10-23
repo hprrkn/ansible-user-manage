@@ -1,6 +1,6 @@
 [localhost]
-localhost
+localhost is_localhost=True
 
 [remote]
-test-web1
-test-web2
+test-web1 is_remote=True
+test-web2 is_remote=True
