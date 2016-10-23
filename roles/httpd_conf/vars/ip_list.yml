@@ -1,0 +1,10 @@
+---
+## sample ip list
+
+ip_list:
+
+  - ip: 192.168.222.222 
+    memo: bob's home 
+
+  - ip: 172.19.9.8
+    memo: tom's home 

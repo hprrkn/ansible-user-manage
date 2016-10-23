@@ -1,0 +1,22 @@
+<VirtualHost *:80>
+  ServerAdmin you@example.com
+  DocumentRoot "/var/www/"
+
+  ErrorLog logs/error_log
+  LogFormat "%a %l %u %t \"%m /%V%U%q\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+  CustomLog logs/access_log combined
+
+  RemoteIPHeader X-Forwarded-For
+
+  <Location "/">
+     AllowOverride All
+     Require all granted
+  </Location>
+
+  <LocationMatch ^/wp-login\.php$>
+{% for item in ip_list %}
+      Require ip {{ item.ip | ipv4 }}
+{% endfor %}
+  </LocationMatch>
+
+
